@@ -23,9 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
-
       # Per https://docs.npmjs.com/trusted-publishers — trusted publishing
       # requires Node >= 22.14.0 and npm >= 11.5.1, and the docs explicitly
       # recommend no package-manager caching on release builds.
@@ -34,6 +31,9 @@ jobs:
         with:
           node-version: "24"
           registry-url: https://registry.npmjs.org
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Upgrade npm to >= 11.5.1 (trusted publishing requirement)
         run: npm install -g npm@latest
