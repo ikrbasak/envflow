@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { loadEnv, loadEnvAsync, EnvFlowError } from "@/index.ts";
 
 describe("loadEnv (sync)", () => {
@@ -50,7 +50,7 @@ describe("loadEnv (sync)", () => {
     write(".env.test.local", "A=testlocal");
     const result = loadEnv({ cwd: dir, nodeEnv: "test" });
     expect(result.parsed).toEqual({ A: "test" });
-    expect(result.files.map((f) => f.split("/").pop())).toEqual([".env", ".env.test"]);
+    expect(result.files.map((f) => basename(f))).toEqual([".env", ".env.test"]);
   });
 
   it("throws ENVFLOW_NO_FILES when nothing matches", () => {
